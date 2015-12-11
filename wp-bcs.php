@@ -59,7 +59,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wp-bcs.php';
 
 
 function zero_modify_page_title($title) {
-    return $title . ' | MEGA ZOB' ;
+    return $title . ' | Blu Magazine' ;
 }
 
 /**
