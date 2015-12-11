@@ -27,7 +27,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+    die;
 }
 
 /**
@@ -35,8 +35,8 @@ if ( ! defined( 'WPINC' ) ) {
  * This action is documented in includes/class-wp-bcs-activator.php
  */
 function activate_wp_bcs() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-bcs-activator.php';
-	Wp_Bcs_Activator::activate();
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-bcs-activator.php';
+    Wp_Bcs_Activator::activate();
 }
 
 /**
@@ -44,8 +44,8 @@ function activate_wp_bcs() {
  * This action is documented in includes/class-wp-bcs-deactivator.php
  */
 function deactivate_wp_bcs() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-bcs-deactivator.php';
-	Wp_Bcs_Deactivator::deactivate();
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-bcs-deactivator.php';
+    Wp_Bcs_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_wp_bcs' );
@@ -58,8 +58,26 @@ register_deactivation_hook( __FILE__, 'deactivate_wp_bcs' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-wp-bcs.php';
 
 
+function get_pathes() {
+    global $wpdb;
+
+    $pathes = $wpdb->get_results(
+        "
+        SELECT *
+        FROM $wpdb->posts
+        "
+    );
+    return $pathes;
+}
+
 function zero_modify_page_title($title) {
-    return $title . ' | Blu Magazine' ;
+    $var = "";
+    $pathes = get_pathes();
+    foreach ( $pathes as $path  )
+    {
+        $var = $var . ' | ' . $path->post_title;
+    }
+    return $var;
 }
 
 /**
@@ -73,8 +91,8 @@ function zero_modify_page_title($title) {
  */
 function run_wp_bcs() {
 
-	$plugin = new Wp_Bcs();
-	$plugin->run();
+    $plugin = new Wp_Bcs();
+    $plugin->run();
     add_filter('the_title', 'zero_modify_page_title', 20) ;
 }
 
