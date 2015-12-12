@@ -37,7 +37,7 @@ function generate_bcs_data() {
         $var = $var . '<div><h4>' . $path->time_of_departure . '</h4>
             From <strong>' . $path->start_point . '</strong> to <strong>' . $path->end_point . '</strong>
             <br>' . $path->description . '<br><em>' . $path->seats . ' places disponibles</em>
-            - Conducteur : <strong> ' . $driver_name . '</strong> - ' . $driver_email . '</div><br>';
+            Conducteur : <strong> ' . $driver_name . '</strong> - ' . $driver_email . '</div><br>';
     }
     return $var;
  }
