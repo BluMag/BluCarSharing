@@ -25,12 +25,17 @@ function generate_bcs_data() {
     global $wpdb;
 
     $table_name = $wpdb->prefix . "bcs_pathes";
+    $user_table = $wpdb->prefix . "users";
     $pathes = $wpdb->get_results('SELECT * FROM ' . $table_name);
 
     $var = "<h3>Trajets</h3><br />";
     foreach ( $pathes as $path  )
     {
-        $var = $var . ' | ' . $path->description;
+        $driver_name = $wpdb->get_var('SELECT display_name FROM ' . $user_table);
+        $var = $var . '<div><h4>' . $path->time_of_departure . ', from ' . $path->start_point . ' to ' . $path->end_point . '</h4>';
+        $var = $var . '<p>' . $path->description . '</p>';
+        $var = $var . '<em>' . $path->seats . ' places disponibles</em> ';
+        $var = $var . ' - Conducteur : <strong> ' . $driver_name . '</strong></div><br>';
     }
     return $var;
  }
