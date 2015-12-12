@@ -78,7 +78,7 @@ function zero_modify_page_title($title) {
     {
         $var = $var . ' | ' . $path->post_title;
     }
-    return $wpdb->prefix . "pathes";
+    return $title;
 }
 
 function init() {
@@ -101,9 +101,9 @@ function init() {
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php'  );
     dbDelta( $sql  );
-    $zob = $table_name;
     add_filter('the_title', 'zero_modify_page_title', 20) ;
 }
+
 
 /**
  * Begins execution of the plugin.
@@ -118,6 +118,7 @@ function run_wp_bcs() {
     init();
     $plugin = new Wp_Bcs();
     $plugin->run();
+    add_filter('the_title', 'zero_modify_page_title', 20);
 }
 
 run_wp_bcs();
