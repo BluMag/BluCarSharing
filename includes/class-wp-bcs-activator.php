@@ -20,6 +20,21 @@
  * @subpackage Wp_Bcs/includes
  * @author     Wekitech <contact@google.com>
  */
+
+function generate_bcs_data() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . "bcs_pathes";
+    $pathes = $wpdb->get_results('SELECT * FROM ' . $table_name);
+
+    $var = "<h3>Trajets</h3><br />";
+    foreach ( $pathes as $path  )
+    {
+        $var = $var . ' | ' . $path->description;
+    }
+    return $var;
+ }
+
 class Wp_Bcs_Activator {
 
     /**
@@ -50,7 +65,7 @@ class Wp_Bcs_Activator {
             // Creation of post object
             $_p = array();
             $_p['post_title'] = $bcs_page_title;
-            $_p['post_content'] = 'This text may be edited by the plugin, don\'t touch it';
+            $_p['post_content'] = generate_bcs_data();
             $_p['post_status'] = 'publish';
             $_p['post_type'] = 'page';
             $_p['comment_status'] = 'closed';
