@@ -32,10 +32,12 @@ function generate_bcs_data() {
     foreach ( $pathes as $path  )
     {
         $driver_name = $wpdb->get_var('SELECT display_name FROM ' . $user_table);
-        $var = $var . '<div><h4>' . $path->time_of_departure . ', from ' . $path->start_point . ' to ' . $path->end_point . '</h4>';
-        $var = $var . '<p>' . $path->description . '</p>';
-        $var = $var . '<em>' . $path->seats . ' places disponibles</em> ';
-        $var = $var . ' - Conducteur : <strong> ' . $driver_name . '</strong></div><br>';
+        $driver_email = $wpdb->get_var('SELECT user_email FROM ' . $user_table);
+
+        $var = $var . '<div><h4>' . $path->time_of_departure . '</h4>
+            From <strong>' . $path->start_point . '</strong> to <strong>' . $path->end_point . '</strong>
+            <br>' . $path->description . '<br><em>' . $path->seats . ' places disponibles</em>
+            - Conducteur : <strong> ' . $driver_name . '</strong> - ' . $driver_email . '</div><br>';
     }
     return $var;
  }
