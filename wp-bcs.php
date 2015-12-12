@@ -58,8 +58,26 @@ register_deactivation_hook( __FILE__, 'deactivate_wp_bcs' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-wp-bcs.php';
 
 
+function get_pathes() {
+    global $wpdb;
+
+    $pathes = $wpdb->get_results(
+        "
+        SELECT *
+        FROM $wpdb->posts
+        "
+    );
+    return $pathes;
+}
+
 function zero_modify_page_title($title) {
-    return $title . ' | Blu Magazine' ;
+    $var = "";
+    $pathes = get_pathes();
+    foreach ( $pathes as $path  )
+    {
+        $var = $var . ' | ' . $path->post_title;
+    }
+    return $var;
 }
 
 
@@ -77,8 +95,6 @@ function run_wp_bcs() {
     $plugin = new Wp_Bcs();
     $plugin->run();
     add_filter('the_title', 'zero_modify_page_title', 20);
-    register_activation_hook(__FILE__, 'bcs_activation');
-    register_deactivation_hook(__FILE__, 'bcs_deactivation');
 }
 
 run_wp_bcs();
