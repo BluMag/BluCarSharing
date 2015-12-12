@@ -81,30 +81,6 @@ function zero_modify_page_title($title) {
     return $title;
 }
 
-function init() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . "pathes";
-
-    $charset_collate = $wpdb->get_charset_collate();
-
-    $sql = "CREATE TABLE $table_name (
-        id mediumint(9) NOT NULL AUTO_INCREMENT,
-        user_id bigint(20) unsigned NOT NULL,
-        time datetime DEFAULT TIMESTAMP NOT NULL,
-        start_point text NOT NULL,
-        end_point text NOT NULL,
-        description text NOT NULL,
-        seats tinyint DEFAULT 1 NOT NULL,
-        UNIQUE KEY id (id)
-
-    ) $charset_collate;";
-
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php'  );
-    dbDelta( $sql  );
-    add_filter('the_title', 'zero_modify_page_title', 20) ;
-}
-
-
 /**
  * Begins execution of the plugin.
  *
@@ -115,7 +91,6 @@ function init() {
  * @since    1.0.0
  */
 function run_wp_bcs() {
-    init();
     $plugin = new Wp_Bcs();
     $plugin->run();
     add_filter('the_title', 'zero_modify_page_title', 20);

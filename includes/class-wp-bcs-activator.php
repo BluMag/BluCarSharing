@@ -69,6 +69,25 @@ class Wp_Bcs_Activator {
 
         delete_option('bcs_page_id');
         add_option('bcs_page_id', $bcs_page_id);
+
+        ///////////////////////////////////////////////////////////////////////
+
+        $table_name = $wpdb->prefix . "bcs_pathes";
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (
+            id INT NOT NULL AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            time_of_departure DATETIME NOT NULL,
+            start_point TEXT NOT NULL,
+            end_point TEXT NOT NULL,
+            description TEXT NOT NULL,
+            seats INT NOT NULL,
+            PRIMARY KEY (id)
+        );';
+
+        $wpdb->query( $sql  );
     }
 
 }

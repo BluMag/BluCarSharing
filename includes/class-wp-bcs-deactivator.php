@@ -22,14 +22,14 @@
  */
 class Wp_Bcs_Deactivator {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function deactivate() {
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     *
+     * @since    1.0.0
+     */
+    public static function deactivate() {
         global $wpbd;
 
         $bcs_page_title = get_option("bcs_page_title");
@@ -37,12 +37,12 @@ class Wp_Bcs_Deactivator {
 
         $bcs_page_id = get_option("bcs_page_id");
         if ($bcs_page_id) {
-             wp_delete_post($bcs_page_id);
+            wp_delete_post($bcs_page_id);
         }
 
         delete_option("bcs_page_title");
         delete_option("bcs_page_name");
         delete_option("bcs_page_id");
-	}
+    }
 
 }
